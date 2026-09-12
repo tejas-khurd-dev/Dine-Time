@@ -1,12 +1,11 @@
-name: Create Production Builds
+name: Publish OTA Update
 
 on:
   push:
     branches: ['main']
 
 jobs:
-  build_android:
-    type: build
+  update:
+    type: update
     params:
-      platform: android
-      profile: preview
+      branch: production

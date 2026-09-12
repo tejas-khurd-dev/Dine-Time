@@ -158,6 +158,20 @@ All routes are prefixed with `/api`.
 4. ✅ **Confirm** - Booking created with unique constraint (restaurant + date + time)
 5. ⏰ **Expiry** - Bookings expire 5 minutes after the booked time slot
 
+## 🚀 Deployment
+
+### OTA Updates (Push to main)
+Every push to `main` publishes an OTA update instantly:
+```bash
+git push origin main
+```
+
+### Preview Build (Manual APK)
+When you need a new APK (native changes, splash screen, etc.):
+```bash
+gh workflow run create-preview-build.yml
+```
+
 ## 📄 License
 
 MIT License
