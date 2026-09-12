@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = process.env.EXPO_PUBLIC_API_URL || "http://192.168.1.103:4000/api";
+const BASE_URL = process.env.EXPO_PUBLIC_API_URL || "https://dine-time-bupe.onrender.com/api";
 
 const api = axios.create({
   baseURL: `${BASE_URL}/restaurant`,
