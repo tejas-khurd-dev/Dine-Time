@@ -169,7 +169,7 @@ git push origin main
 ### Preview Build (Manual APK)
 When you need a new APK (native changes, splash screen, etc.):
 ```bash
-gh workflow run create-preview-build.yml
+eas workflow:run client/.eas/workflows/create-preview-build.yml
 ```
 
 ## 📄 License
