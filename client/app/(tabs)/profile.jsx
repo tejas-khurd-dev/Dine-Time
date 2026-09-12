@@ -1,5 +1,5 @@
-import { View, Text, TouchableOpacity, Alert, TextInput, ActivityIndicator } from "react-native";
-import React, { useState } from "react";
+import { View, Text, TouchableOpacity, Alert, TextInput, ActivityIndicator, FlatList, RefreshControl } from "react-native";
+import React, { useState, useCallback } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import Modal from "react-native-modal";
@@ -13,11 +13,15 @@ import {
   Settings,
   Pencil,
   X,
+  CalendarDays,
 } from "lucide-react-native";
 import { useAuth } from "@/hooks/auth.hook";
+import { useBooking } from "@/hooks/booking.hook";
+import BookingCard from "@/components/booking-card";
 import RefreshLayout from "@/components/refresh-layout";
 
 const menuItems = [
+  { icon: CalendarDays, label: "My Bookings", route: "bookings" },
   { icon: Bell, label: "Notifications", route: null },
   { icon: CreditCard, label: "Payment Methods", route: null },
   { icon: Settings, label: "Settings", route: null },
@@ -27,9 +31,14 @@ const menuItems = [
 const Profile = () => {
   const router = useRouter();
   const { user, isAuthenticated, handleLogout, handleUpdateUsername } = useAuth();
+  const { getMyBookings } = useBooking();
   const [editVisible, setEditVisible] = useState(false);
   const [newUsername, setNewUsername] = useState("");
   const [saving, setSaving] = useState(false);
+  const [bookingsVisible, setBookingsVisible] = useState(false);
+  const [allBookings, setAllBookings] = useState([]);
+  const [bookingsLoading, setBookingsLoading] = useState(false);
+  const [bookingsRefreshing, setBookingsRefreshing] = useState(false);
 
   const confirmLogout = () => {
     Alert.alert("Sign Out", "Are you sure you want to sign out?", [
@@ -73,6 +82,34 @@ const Profile = () => {
     if (user?.username) return user.username.charAt(0).toUpperCase();
     if (user?.email) return user.email.charAt(0).toUpperCase();
     return "U";
+  };
+
+  const loadBookings = async () => {
+    if (!isAuthenticated) return;
+    try {
+      const data = await getMyBookings();
+      setAllBookings(data);
+    } catch (error) {
+    }
+  };
+
+  const openBookings = async () => {
+    setBookingsVisible(true);
+    setBookingsLoading(true);
+    await loadBookings();
+    setBookingsLoading(false);
+  };
+
+  const onBookingsRefresh = async () => {
+    setBookingsRefreshing(true);
+    await loadBookings();
+    setBookingsRefreshing(false);
+  };
+
+  const handleMenuPress = (route) => {
+    if (route === "bookings") {
+      openBookings();
+    }
   };
 
   return (
@@ -123,6 +160,7 @@ const Profile = () => {
               activeOpacity={0.7}
               className={`flex-row items-center justify-between px-5 py-4 ${index < menuItems.length - 1 ? "border-b border-border" : ""
                 }`}
+              onPress={() => handleMenuPress(item.route)}
             >
               <View className="flex-row items-center">
                 <item.icon size={20} color="#6b746f" strokeWidth={1.8} />
@@ -159,6 +197,66 @@ const Profile = () => {
           </TouchableOpacity>
         )}
       </RefreshLayout>
+
+      {/* All Bookings Modal */}
+      <Modal
+        isVisible={bookingsVisible}
+        onBackdropPress={() => setBookingsVisible(false)}
+        onBackButtonPress={() => setBookingsVisible(false)}
+        swipeDirection="down"
+        onSwipeComplete={() => setBookingsVisible(false)}
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        backdropOpacity={0.4}
+        style={{ margin: 0, justifyContent: "flex-end" }}
+      >
+        <View className="rounded-t-3xl bg-surface" style={{ maxHeight: "80%" }}>
+          <View className="flex-row items-center justify-between border-b border-border px-5 py-4">
+            <View className="flex-row items-center gap-2">
+              <Text className="font-dm-bold text-lg text-text-primary">
+                All Bookings
+              </Text>
+              <View className="rounded-full bg-primary/10 px-2.5 py-0.5">
+                <Text className="font-dm-semibold text-xs text-primary">
+                  {allBookings.length}
+                </Text>
+              </View>
+            </View>
+            <TouchableOpacity onPress={() => setBookingsVisible(false)} activeOpacity={0.7}>
+              <X size={22} color="#6b746f" />
+            </TouchableOpacity>
+          </View>
+
+          {bookingsLoading ? (
+            <View className="items-center justify-center py-16">
+              <ActivityIndicator size="small" color="#1f4d3a" />
+            </View>
+          ) : allBookings.length === 0 ? (
+            <View className="items-center justify-center py-16">
+              <View className="h-14 w-14 items-center justify-center rounded-full bg-surface-soft">
+                <CalendarDays size={24} color="#9ca39f" strokeWidth={1.5} />
+              </View>
+              <Text className="mt-3 font-dm-semibold text-sm text-text-primary">
+                No bookings yet
+              </Text>
+              <Text className="mt-1 font-dm-regular text-xs text-text-secondary">
+                Your bookings will appear here
+              </Text>
+            </View>
+          ) : (
+            <FlatList
+              data={allBookings}
+              keyExtractor={(item) => item._id}
+              contentContainerStyle={{ padding: 20 }}
+              showsVerticalScrollIndicator={false}
+              renderItem={({ item }) => <BookingCard booking={item} />}
+              refreshControl={
+                <RefreshControl refreshing={bookingsRefreshing} onRefresh={onBookingsRefresh} />
+              }
+            />
+          )}
+        </View>
+      </Modal>
 
       {/* Edit Username Modal */}
       <Modal

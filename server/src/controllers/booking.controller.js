@@ -93,7 +93,7 @@ const getUserBookings = async (req, res) => {
     const bookings = await bookingModel
       .find({ user: userId })
       .populate("restaurant", "name cuisine image")
-      .sort({ date: 1, time: 1 });
+      .sort({ createdAt: -1 });
 
     return res.status(200).json(bookings);
   } catch (error) {
