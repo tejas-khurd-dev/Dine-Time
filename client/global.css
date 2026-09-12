@@ -1,0 +1,90 @@
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css";
+
+@import "nativewind/theme";
+
+@theme {
+
+  /* BRAND COLORS */
+
+  --color-primary: #1f4d3a;
+  --color-primary-dark: #16382a;
+  --color-primary-light: #6faf7b;
+
+  --color-secondary: #f4a261;
+  --color-secondary-light: #fce2c5;
+
+  /* BACKGROUNDS */
+
+  --color-background: #faf7f2;
+  --color-surface: #ffffff;
+  --color-surface-soft: #f3eee6;
+  --color-input: #f7f3ed;
+
+  /* TEXT */
+
+  --color-text-primary: #24332d;
+  --color-text-secondary: #6b746f;
+  --color-text-muted: #9ca39f;
+  --color-text-inverse: #ffffff;
+
+  /* BORDERS */
+
+  --color-border: #eae4dc;
+
+  /* STATUS */
+
+  --color-success: #4f8a62;
+  --color-success-light: #e5f3e8;
+
+  --color-warning: #e59b45;
+  --color-warning-light: #fff1dc;
+
+  --color-error: #d95d4f;
+  --color-error-light: #fce7e4;
+
+  --color-info: #4d7ea8;
+  --color-info-light: #e5f0f8;
+
+  /* TAB BAR */
+
+  --color-tab-background: #fffcf8;
+  --color-tab-active: #1f4d3a;
+  --color-tab-inactive: #9a9a94;
+  --color-tab-active-background: #e5f0e8;
+
+  /* FONT FAMILY */
+
+  --font-dm-regular: "DM-Sans-Regular";
+  --font-dm-medium: "DM-Sans-Medium";
+  --font-dm-semibold: "DM-Sans-SemiBold";
+  --font-dm-bold: "DM-Sans-Bold";
+
+  --font-playfair-regular: "Playfair-Regular";
+  --font-playfair-semibold: "Playfair-SemiBold";
+  --font-playfair-bold: "Playfair-Bold";
+}
+
+body {
+  background-color: #faf7f2;
+  color: #24332d;
+  font-family: "DM-Sans-Regular";
+}
+
+/* Enhanced shadow utilities */
+.shadow-soft {
+  shadow-color: #000;
+  shadow-offset: 0px 2px 8px;
+  shadow-opacity: 0.06;
+  shadow-radius: 12px;
+  elevation: 3;
+}
+
+.shadow-card {
+  shadow-color: #000;
+  shadow-offset: 0px 4px 12px;
+  shadow-opacity: 0.08;
+  shadow-radius: 16px;
+  elevation: 4;
+}
