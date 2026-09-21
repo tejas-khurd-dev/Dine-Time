@@ -2,7 +2,7 @@
   "expo": {
     "name": "dine-time",
     "slug": "dine-time",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/apk-logo.png",
     "scheme": "dinetime",
