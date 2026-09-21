@@ -2,7 +2,7 @@
   "expo": {
     "name": "dine-time",
     "slug": "dine-time",
-    "version": "1.0.1",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/apk-logo.png",
     "scheme": "dinetime",
@@ -57,6 +57,9 @@
       "eas": {
         "projectId": "086a2f91-0029-4da2-82ca-9bfd157e5899"
       }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/086a2f91-0029-4da2-82ca-9bfd157e5899"
     }
   }
 }
