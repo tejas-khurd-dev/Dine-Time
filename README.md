@@ -159,10 +159,9 @@ All routes are prefixed with `/api`.
 
 ## 🚀 Deployment
 
-### Preview Build (Auto on Push)
-Every push to `main` triggers an EAS preview APK build automatically via `.eas/workflows/create-preview-build.yml`.
+### Preview Build (Manual Trigger)
+Run manually via EAS workflow:
 
-### Manual Build
 ```bash
 eas workflow:run client/.eas/workflows/create-preview-build.yml
 ```
