@@ -73,7 +73,6 @@ dine-time/
 │   │   ├── routes/             # Express routers
 │   │   └── services/           # Email service
 │   └── server.js               # Entry point
-└── cinevaultreeadmne.md
 ```
 
 ## 🚀 Getting Started
@@ -160,14 +159,10 @@ All routes are prefixed with `/api`.
 
 ## 🚀 Deployment
 
-### OTA Updates (Push to main)
-Every push to `main` publishes an OTA update instantly:
-```bash
-git push origin main
-```
+### Preview Build (Auto on Push)
+Every push to `main` triggers an EAS preview APK build automatically via `.eas/workflows/create-preview-build.yml`.
 
-### Preview Build (Manual APK)
-When you need a new APK (native changes, splash screen, etc.):
+### Manual Build
 ```bash
 eas workflow:run client/.eas/workflows/create-preview-build.yml
 ```

@@ -128,7 +128,7 @@ const Home = () => {
                   <View className="ml-3 flex-1">
                     <View className="self-start rounded-full bg-secondary-light px-2 py-0.5">
                       <Text className="font-dm-semibold text-[10px] text-secondary">
-                        30% OFF
+                        25% OFF
                       </Text>
                     </View>
 
